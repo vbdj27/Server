@@ -4,60 +4,44 @@
 #include <thread>
 #include <atomic>
 #include <mutex>
+#include "AccountManager.h"
+#include "UserManager.h"
 
-vector <INT32> v;
-
-// Mutual Exclusive (상호배타적)
-mutex m;
-
-// RAII (Resource Acquisition Is Initialization)
-template<typename T>
-class LockGuard
+void Func1()
 {
-public:
-	LockGuard(T& m)
+	for (INT32 i = 0; i < 100; i++)
 	{
-		_mutex = &m;
-		_mutex->lock();
+		UserManager::Instance()->ProcessSave();
 	}
+}
 
-	~LockGuard()
-	{
-		_mutex->unlock();
-	}
-
-private:
-	T* _mutex;
-};
-
-void Push()
+void Func2()
 {
-	// 자물쇠 잠그기 (재귀적 호출 불가)
-	std::lock_guard<std::mutex> lockGuard(m);
-
-	for (INT32 i = 0; i < 10000; i++)
+	for (INT32 i = 0; i < 100; i++)
 	{
-		//std::unique_lock<std::mutex> uniqueLock(m, std::defer_lock); // 잠그는 시점을 늦춰서 해줌
-
-		//uniqueLock.lock();
-
-		//m.lock();
-
-		v.push_back(i);
-
-		// 자물쇠 풀기
-		//m.unlock();
+		AccountManager::Instance()->ProcessLogin();
 	}
 }
 
 int main()
 {
-	std::thread t1(Push);
-	std::thread t2(Push);
+	std::thread t1(Func1);
+	std::thread t2(Func2);
 
 	t1.join();
 	t2.join();
 
-	cout << v.size() << endl;
+	cout << "Jobs Done" << endl;
+
+	// 락을 거는 순서를 동일하게 해서 데드락을 방지해야함
+
+	//참고
+	mutex m1;
+	mutex m2;
+	std::lock(m1, m2); // m1.lock(); m2.lock();
+
+	//adopt_lock : 이미 lock된 상태니까, 나중에 소멸될 때 락 해제
+	lock_guard<mutex> g1(m1, std::adopt_lock);
+	lock_guard<mutex> g1(m2, std::adopt_lock);
 }
 
