@@ -2,42 +2,41 @@
 #include <iostream>
 #include "CorePch.h"
 #include <thread>
+#include <atomic>
 
-void HelloThread()
+// atomic  : All or Nothing
+
+atomic<INT32> sum = 0; //병목현상 발생할 수 있음 (연산느림)
+
+void Add()
 {
-    cout << "Hello Thread" << endl;
+	for (INT32 i = 0; i < 1000000; i++)
+	{
+		sum.fetch_add(1);
+	}
 }
 
-void HelloThread2(INT32 num)
+void Sub()
 {
-    cout << num << endl;
+	for (INT32 i = 0; i < 1000000; i++)
+	{
+		sum.fetch_add(-1);
+	}
 }
 
 int main()
 {
-    //std::thread t(HelloThread2, 10); //새로운 스레드에서 해당 함수 실행 (메인스레드와 동시에 실행)
+	Add();
+	Sub();
 
-    vector<std::thread> v;
-
-    for (INT32 i = 0; i < 10; i++)
-    {
-        v.push_back(std::thread(HelloThread2, i));
-    }
-
-    for (INT32 i = 0; i < 10; i++)
-    {
-        if (v[i].joinable()) // std::thread 객체에서 스레드가 사용할 수 있는 상태인지 체크
-        {
-            v[i].join(); // 스레드가 종료할 때까지 기다림
-        }
-    }
-
-    //INT32 count = t.hardware_concurrency(); // cpu 코어 개수?
-    //auto id = t.get_id(); // 스레드마다 부여되는 id
-
-    //t.detach(); // std::thread 객체에서 실제 스레드를 분리
-    
-    cout << "Hello Main" << endl;
-
+	cout << sum << endl;
+	
+	std::thread t1(Add);
+	std::thread t2(Sub);
+	t1.join();
+	t2.join();
+	
+	cout << sum << endl;
+	
 }
 
