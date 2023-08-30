@@ -33,6 +33,12 @@ public:
 		while (_locked.compare_exchange_strong(expected, desired) == false)
 		{
 			expected = false;
+			
+			//SpinLock 대신 Sleep방법을 사용(이미 Lock시 일정시간동안 대기상태 => 커널로 돌아감)
+			
+			//this_thread::sleep_for(std::chrono::milliseconds(100));
+			this_thread::sleep_for(0ms);
+			//this_thread::yield(); // == this_thread::sleep_for(0ms)
 		}
 	}
 
