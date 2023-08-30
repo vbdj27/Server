@@ -3,40 +3,61 @@
 #include "CorePch.h"
 #include <thread>
 #include <atomic>
+#include <mutex>
 
-// atomic  : All or Nothing
+vector <INT32> v;
 
-atomic<INT32> sum = 0; //병목현상 발생할 수 있음 (연산느림)
+// Mutual Exclusive (상호배타적)
+mutex m;
 
-void Add()
+// RAII (Resource Acquisition Is Initialization)
+template<typename T>
+class LockGuard
 {
-	for (INT32 i = 0; i < 1000000; i++)
+public:
+	LockGuard(T& m)
 	{
-		sum.fetch_add(1);
+		_mutex = &m;
+		_mutex->lock();
 	}
-}
 
-void Sub()
-{
-	for (INT32 i = 0; i < 1000000; i++)
+	~LockGuard()
 	{
-		sum.fetch_add(-1);
+		_mutex->unlock();
+	}
+
+private:
+	T* _mutex;
+};
+
+void Push()
+{
+	// 자물쇠 잠그기 (재귀적 호출 불가)
+	std::lock_guard<std::mutex> lockGuard(m);
+
+	for (INT32 i = 0; i < 10000; i++)
+	{
+		//std::unique_lock<std::mutex> uniqueLock(m, std::defer_lock); // 잠그는 시점을 늦춰서 해줌
+
+		//uniqueLock.lock();
+
+		//m.lock();
+
+		v.push_back(i);
+
+		// 자물쇠 풀기
+		//m.unlock();
 	}
 }
 
 int main()
 {
-	Add();
-	Sub();
+	std::thread t1(Push);
+	std::thread t2(Push);
 
-	cout << sum << endl;
-	
-	std::thread t1(Add);
-	std::thread t2(Sub);
 	t1.join();
 	t2.join();
-	
-	cout << sum << endl;
-	
+
+	cout << v.size() << endl;
 }
 
