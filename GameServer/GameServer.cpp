@@ -5,79 +5,88 @@
 #include <atomic>
 #include <mutex>
 #include <windows.h>
+#include <future>
 
-mutex m;
-queue<int32> q;
-HANDLE handle;
 
-// 참고) CV는 User Level Object (커널 오브젝트 X)
-condition_variable cv;
-
-void Producer()
+int64 Calculate()
 {
-	while (true)
+	int64 sum = 0;
+
+	for (int32 i = 0; i < 100000; i++)
 	{
-		// 1) Lock을 잡고
-		// 2) 공유 변수 값을 수정
-		// 3) Lock을 풀고
-		// 4) 조건변수 통해 다른 스레드에게 통제
-
-		{
-			unique_lock<mutex> lock(m);
-			q.push(100);
-		}
-		
-
-		cv.notify_one(); // wait중인 스레드가 있으면 1개만 깨운다.
-
-		this_thread::sleep_for(100ms);
-
+		sum += i;
 	}
 
-	
+	return sum;
 }
 
-void Consumer()
+void PromiseWorker(std::promise<string>&& promise)
 {
-	while (true)
-	{
+	promise.set_value("Secret Message");
+}
 
-		unique_lock<mutex> lock(m)
-		cv.wait(lock, []() {return q.empty() == false; });
-
-		// 1) Lock을 잡고
-		// 2) 조건 확인
-		// 3) 만족 => 빠져나와서 다음코드 진행
-		//    불만족 => Lock을 풀어주고 대기 상태로 전환
-
-		// 그런데 notify_one을 했으면 항상 조건식을 만족하는거 아닐까?
-		// Spurious WakeUp (가짜 기상?)
-		// notify_one을 할 때 lock을 잡고 있는 것이 아니기 때문
-
-		//while (q.empty() == false)
-		{
-			int32 data = q.front();
-			q.pop();
-			cout << q.size() << endl;
-		}
-	}
+void TaskWorker(std::packaged_task<int64(void)>&& task)
+{
+	task();
 }
 
 int main()
 {
-	// 커널 오브젝트
-	// Usage Count
-	// Signal(파란불) / Non-Signal(빨간불)
-	// Auto / Manual
+	// 동기(synchronous) 실행
+	//int64 sum = Calculate();
 
-	handle = ::CreateEvent(NULL/*보안속성*/, FALSE/*ManualReset 자동 수동*/, FALSE, NULL);
+	//cout << sum << endl;
 
-	thread t1(Producer);
-	thread t2(Consumer);
+	// std::future
+	{
+		// 1) deferred -> lazy evaluation 지연해서 실행하세요
+		// 2) asnyc -> 별도의 스레드를 만들어서 실행하세요
+		// 3) deferred | async -> 둘 중 알아서 골라주세요
 
-	t1.join();
-	t2.join();
+		std::future<int64> future = std::async(std::launch::async, Calculate);
 
-	::CloseHandle(handle);
+		// TODO
+		std::future_status status = future.wait_for(1ms); // 작업상태
+
+		int64 sum = future.get(); // 결과물이 필요할때 Get으로 가져와서 사용
+	}
+
+	// std::promise
+	{
+		// 미래(std::future)에 결과물을 반환해줄꺼라 약속
+		std::promise<string> promise;
+		std::future<string> future = promise.get_future();
+
+		thread t(PromiseWorker, std::move(promise));
+
+		string message = future.get();
+		cout << message << endl;
+
+		t.join();
+	}
+
+	// std::packaged_task
+	{
+		std::packaged_task<int64(void)> task(Calculate);
+		std::future<int64> future = task.get_future();
+
+		std::thread t(TaskWorker, std::move(task));
+
+		int64 sum = future.get();
+		cout << sum << endl;
+
+		t.join();
+	}
+
+	// 결론)
+	// mutex, condition_valuable까지 가지 않고 단순한 애들을 처리
+	// 특히나 한 번 발생하는 이벤트에 유용하다
+
+	// 1)async
+	// 원하는 함수를 비동기적으로 실행
+	// 2)promise
+	// 결과물을 promise를 통해 future로 받아줌
+	// 3) packaged_task
+	// 원하는 함수의 실행 결과를 packaged_task를 통해 future로 받아줌
 }
 
