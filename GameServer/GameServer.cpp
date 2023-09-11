@@ -7,58 +7,80 @@
 #include <windows.h>
 #include <future>
 
-// 가시성, 코드 재배치
-// Atomic 연산 : 더 이상 쪼갤수 없어 한번에 연산이 처리됨(atomic 클래스 의존x)
-// atomic 연산에 한해, 모든 스레드가 동일 객체에 대해서 동일한 수정 순서를 관찰
+// Momory Model (정책)
+// 1) Sequentially Consistant (seq_cst)
+// 2) Acquire-Release (acquire, release)
+// 3) Relaxed(relaxed)
 
-int32 x = 0;
-int32 y = 0;
-int32 r1 = 0;
-int32 r2 = 0;
+// 1) seq_cst (가장 엄격 = 컴파일러 최적화 여지 적음 = 직관적)
+// -> 가시성 문제해결, 코드 재배치 해결
 
-volatile bool ready;
+// 2) acquire-release
+// -> 중간! relese 명령 이전의 메모리 명령들이, 해당 명령 이후로 재배치 되는 것을 금지
+// -> acquire로 같은 변수를 읽는 스레드가 있다면 release 이전의 명령들이 acquire 순간에 관찰 가능 (가시성 보장)
 
-void Thread_1()
+// 3) relaxed (자유로움 = 컴파일러 최적화 여지 많음 = 직관적이지 않음)
+// -> 코드 재배치 컴파일러 맘대로, 가시성 해결 x (동일 객체에 대한 동일 관찰 순서만 보장)
+
+
+
+atomic<bool> flag;
+atomic<bool> ready;
+int32 value;
+
+void Producer()
 {
-	while (!ready);
+	value = 10;
 
-	y = 1; // store y
-	r1 = x; // load x
+	ready.store(true, memory_order_seq_cst);
 }
 
-void Thread_2()
+void Consumer()
 {
-	while (!ready);
+	while (ready.load(memory_order_seq_cst) == false)
 
-	x = 1; // store x
-	r2 = y; // load y
+	;
+		
+	cout << value << endl;
 }
 
 int main()
 {
-	int32 count = 0;
+	flag = false;
 
-	while (true)
+	flag.store(true, memory_order_seq_cst);
+
+	bool val = flag.load(memory_order_seq_cst);
+
+	// 이전 flag 값을 prev에 넣고, flag 값을 수정
 	{
-		ready = false;
-		count++;
+		bool prev = flag.exchange(true);
+	}
 
-		x = y = r1 = r2 = 0;
+	// CAS(Compare And Swap) 조건부 수정
+	{
+		bool expected = false;
+		bool desired = true;
+		flag.compare_exchange_strong(expected, desired);
 
-		thread t1(Thread_1);
-		thread t2(Thread_2);
-
-		ready = true;
-
-		t1.join();
-		t2.join();
-
-		if (r1 == 0 && r2 == 0)
+		if (flag == expected)
 		{
-			break;
+			flag = desired;
+			return true;
+		}
+
+		else
+		{
+			expected = flag;
+			return false;
 		}
 	}
 
-	cout << count << " 번만에 빠져나옴" << endl;
+	ready = false;
+	value = 0;
+	thread t1(Producer);
+	thread t2(Consumer);
+	t1.join();
+	t2.join();
 }
 
