@@ -8,78 +8,52 @@
 #include <future>
 #include "ThreadManager.h"
 #include "RefCounting.h"
+#include "Memory.h"
 
-
-class Wraight : public RefCountable
+class Knight
 {
 public:
-	int _hp = 150;
-	int _posX = 0;
-	int _posY = 0;
+	Knight()
+	{
+		cout << "Knight()" << endl;
+	}
+
+	~Knight()
+	{
+		cout << "~Knight()" << endl;
+	}
 };
 
-using WraightRef = TSharedPtr<Wraight>;
-
-class Missile : public RefCountable
+// new operator overloading (Global)
+void* operator new(size_t size)
 {
-public:
-	void SetTarget(WraightRef target)
-	{
-		_target = target;
-	}
+	cout << "new! " << size << endl;
+	void* ptr = ::malloc(size);
+	return ptr;
+}
 
-	bool Update()
-	{
-		if (_target == nullptr)
-		{
-			return true;
-		}
+void operator delete(void* ptr)
+{
+	cout << "delete !"  << endl;
+	::free(ptr);
+}
 
-		int posX = _target->_posX;
-		int posY = _target->_posY;
-
-		// TODO : 쫓아간다
-
-		if (_target->_hp == 0)
-		{
-			_target = nullptr;
-			return true;
-		}
-
-		return false;
-	}
-
-	WraightRef _target = nullptr;
-};
-
-
-using MissileRef = TSharedPtr<Missile>;
+void* operator new[](size_t size)
+{
+	cout << "new[] " << size << endl;
+	void* ptr = ::malloc(size);
+	return ptr;
+}
+void operator delete[](void* ptr)
+{
+	cout << "delete! []" << endl;
+	::free(ptr);
+}
 
 int main()
 {
-	WraightRef wraight(new Wraight());
-	wraight->ReleaseRef();
-	MissileRef missile(new Missile());
-	missile->ReleaseRef();
+	Knight* knight = xnew<Knight>(100);
 
-	missile->SetTarget(wraight);
-
-	// 레이스가 피격 당함
-	wraight->_hp = 0;
-
-	wraight = nullptr;
-
-	while (true)
-	{
-		if (missile)
-		{
-			if (missile->Update())
-			{
-				missile = nullptr;
-			}
-		}
-	}
-
-	missile = nullptr;
+	xdelete(knight);
 }
 
