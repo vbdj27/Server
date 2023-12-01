@@ -9,6 +9,8 @@
 #include "RefCounting.h"
 #include "Memory.h"
 #include <iostream>
+#include "Allocator.h"
+
 
 class Knight
 {
@@ -16,12 +18,12 @@ public:
 	Knight()
 	{
 		cout << "Knight()" << endl;
-	}
+	};
 
 	~Knight()
 	{
 		cout << "~Knight()" << endl;
-	}
+	};
 
 	int32 _hp = 100;
 	int32 _mp = 10;
@@ -55,10 +57,6 @@ void operator delete[](void* ptr)
 
 int main()
 {
-	Knight* knight = xnew<Knight>(100);
-
-	xdelete(knight);
-
-	knight->_hp = 100;
+	
 }
 
