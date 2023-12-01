@@ -1,5 +1,4 @@
 ﻿#include "pch.h"
-#include <iostream>
 #include "CorePch.h"
 #include <thread>
 #include <atomic>
@@ -9,6 +8,7 @@
 #include "ThreadManager.h"
 #include "RefCounting.h"
 #include "Memory.h"
+#include <iostream>
 
 class Knight
 {
@@ -22,6 +22,9 @@ public:
 	{
 		cout << "~Knight()" << endl;
 	}
+
+	int32 _hp = 100;
+	int32 _mp = 10;
 };
 
 // new operator overloading (Global)
@@ -55,5 +58,7 @@ int main()
 	Knight* knight = xnew<Knight>(100);
 
 	xdelete(knight);
+
+	knight->_hp = 100;
 }
 
