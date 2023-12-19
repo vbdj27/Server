@@ -12,9 +12,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\ServerCore\LockFreeStack.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
     <ClCompile Include="GameServer.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -22,9 +19,6 @@
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ServerCore\LockFreeStack.h">
-      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
