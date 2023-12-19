@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include <iostream>
 #include "CorePch.h"
 #include <thread>
 #include <atomic>
@@ -9,68 +10,63 @@
 #include "RefCounting.h"
 #include "Memory.h"
 #include "Allocator.h"
-#include <iostream>
+#include "LockFreeStack.h"
 
 
-class Knight
+DECLSPEC_ALIGN(16)
+class Data
 {
 public:
-	Knight()
-	{
-		cout << "Knight()" << endl;
-	};
-
-	~Knight()
-	{
-		cout << "~Knight()" << endl;
-	};
-
-	int32 _hp = 100;
-	int32 _mp = 10;
+	SListEntry _entry;
+	int64 _rand = rand() % 1000;
 };
 
-// new operator overloading (Global)
-void* operator new(size_t size)
-{
-	cout << "new! " << size << endl;
-	void* ptr = ::malloc(size);
-	return ptr;
-}
-
-void operator delete(void* ptr)
-{
-	cout << "delete !"  << endl;
-	::free(ptr);
-}
-
-void* operator new[](size_t size)
-{
-	cout << "new[] " << size << endl;
-	void* ptr = ::malloc(size);
-	return ptr;
-}
-void operator delete[](void* ptr)
-{
-	cout << "delete! []" << endl;
-	::free(ptr);
-}
+SListHeader* GHeader;
 
 int main()
 {
-	for (int32 i = 0; i < 5; i++)
+	GHeader = new SListHeader();
+	ASSERT_CRASH(((uint64)GHeader % 16) == 0);
+	InitializeHead(GHeader);
+
+	for (int32 i = 0; i < 3; i++)
 	{
 		GThreadManager->Launch([]()
 			{
 				while (true)
 				{
-					Vector<Knight> v(10);
+					Data* data = new Data();
+					ASSERT_CRASH(((uint64)GHeader % 16) == 0);
 
-					Map<int32, Knight> m;
-					m[100] = Knight();
-
+					PushEntrySList(GHeader, (SListEntry*)data);
 					this_thread::sleep_for(10ms);
 				}
-			});
+			}
+		);
+	}
+
+	for (int32 i = 0; i < 2; i++)
+	{
+		GThreadManager->Launch([]()
+			{
+				while (true)
+				{
+					Data* pop = nullptr;
+					pop = (Data*)PopEntrySList(GHeader);
+
+					if (pop)
+					{
+						cout << pop->_rand << endl;
+						delete pop;
+					}
+
+					else
+					{
+						cout << "NONE" << endl;
+					}
+				}
+			}
+		);
 	}
 
 	GThreadManager->Join();
