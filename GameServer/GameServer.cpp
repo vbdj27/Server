@@ -8,8 +8,8 @@
 #include "ThreadManager.h"
 #include "RefCounting.h"
 #include "Memory.h"
-#include <iostream>
 #include "Allocator.h"
+#include <iostream>
 
 
 class Knight
@@ -57,6 +57,22 @@ void operator delete[](void* ptr)
 
 int main()
 {
-	
+	for (int32 i = 0; i < 5; i++)
+	{
+		GThreadManager->Launch([]()
+			{
+				while (true)
+				{
+					Vector<Knight> v(10);
+
+					Map<int32, Knight> m;
+					m[100] = Knight();
+
+					this_thread::sleep_for(10ms);
+				}
+			});
+	}
+
+	GThreadManager->Join();
 }
 
