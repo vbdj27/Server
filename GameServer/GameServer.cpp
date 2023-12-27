@@ -70,6 +70,32 @@ int main()
 		char ipAddress[16];
 		::inet_ntop(AF_INET, &clientAddr.sin_addr, ipAddress, sizeof(ipAddress));
 		cout << "Client Connected IP = " << ipAddress << endl;
+
+		while (true)
+		{
+			char recvBuffer[1000];
+
+			int32 recvLen = ::recv(clientSocket, recvBuffer, sizeof(recvBuffer), 0);
+			if (recvLen <= 0)
+			{
+				int32 errCode = ::WSAGetLastError();
+				cout << "Recv ErrorCode : " << errCode << endl;
+
+				return 0;
+			}
+
+			cout << "Recv Data Data = " << recvBuffer << endl;
+			cout << "Recv Data Len = " << recvLen << endl;
+
+			int32 resultCode = ::recv(clientSocket, recvBuffer, sizeof(recvLen), 0);
+			if (resultCode == SOCKET_ERROR)
+			{
+				int32 errCode = ::WSAGetLastError();
+				cout << "Send ErrorCode : " << errCode << endl;
+
+				return 0;
+			}
+		}
 	}
 
 	// winsock 종료
