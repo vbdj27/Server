@@ -9,7 +9,7 @@ void Lock::WriteLock(const char* name)
 	GDeadLockProfiler->PushLock(name);
 #endif
 
-	// µ¿ÀÏÇÑ ½º·¹µå°¡ ¼ÒÀ¯ÇÏ°í ÀÖ´Ù¸é ¹«Á¶°Ç ¼º°ø
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	const int32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
 
 	if (LThreadId = lockThreadId)
@@ -18,7 +18,7 @@ void Lock::WriteLock(const char* name)
 		return;
 	}
 
-	// ¾Æ¹«µµ ¼ÒÀ¯ ¹× °øÀ¯ÇÏ°í ÀÖÁö ¾ÊÀ» ¶§, °æÇÕÇØ¼­ ¼ÒÀ¯±ÇÀ» ¾ò´Â´Ù.
+	// ï¿½Æ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â´ï¿½.
 	const int64 beginTick = ::GetTickCount64();
 	const uint32 desired = ((LThreadId << 16) & WRITE_THREAD_MASK);
 
@@ -36,7 +36,7 @@ void Lock::WriteLock(const char* name)
 
 		if (::GetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK)
 		{
-			//CRASH("LOCK_TIMEOUT");
+			CRASH("LOCK_TIMEOUT");
 		}
 
 		this_thread::yield();
@@ -49,10 +49,10 @@ void Lock::WriteUnlock(const char* name)
 	GDeadLockProfiler->PopLock(name);
 #endif
 
-	// ReadLock ´Ù Ç®±â Àü¿¡´Â WriteLock ºÒ°¡´É
+	// ReadLock ï¿½ï¿½ Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WriteLock ï¿½Ò°ï¿½ï¿½ï¿½
 	if ((_lockFlag.load() & READ_COUNT_MASK) != 0)
 	{
-		//CRASH("INVALID_UNLOCK_ORDER");
+		CRASH("INVALID_UNLOCK_ORDER");
 	}
 
 	const int32 lockCount = --_writeCount;
@@ -68,7 +68,7 @@ void Lock::ReadLock(const char* name)
 	GDeadLockProfiler->PushLock(name);
 #endif
 
-	// µ¿ÀÏÇÑ ½º·¹µå°¡ ¼ÒÀ¯ÇÏ°í ÀÖ´Ù¸é ¹«Á¶°Ç ¼º°ø
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	const int32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
 
 	if (LThreadId = lockThreadId)
@@ -77,7 +77,7 @@ void Lock::ReadLock(const char* name)
 		return;
 	}
 
-	// ¾Æ¹«µµ ¼ÒÀ¯ÇÏ°í ÀÖÁö ¾ÊÀ» ¶§ °æÇÕÇØ¼­ °øÀ¯ Ä«¿îÆ®¸¦ ¿Ã¸°´Ù
+	// ï¿½Æ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 	const int64 beginTick = ::GetTickCount64();
 
 	while (true)
@@ -93,7 +93,7 @@ void Lock::ReadLock(const char* name)
 
 		if (::GetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK)
 		{
-			//CRASH("LOCK_TIMEOUT");
+			CRASH("LOCK_TIMEOUT");
 		}
 
 		this_thread::yield();
@@ -108,6 +108,6 @@ void Lock::ReadUnlock(const char* name)
 
 	if ((_lockFlag.fetch_sub(1) & READ_COUNT_MASK) == 0)
 	{
-		//CRASH("MULTIPLE_UNLOCK");
+		CRASH("MULTIPLE_UNLOCK");
 	}
 }

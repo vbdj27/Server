@@ -2,12 +2,11 @@
 class RefCountable
 {
 public:
-	RefCountable() : _refCount(1) {};
-	virtual ~RefCountable() {};
+	RefCountable() : _refCount(1) {}
+	virtual ~RefCountable() {}
 
-	int32 GetRefCount() { return _refCount; };
-
-	int32 AddRef() { return ++_refCount; };
+	int32 GetRefCount() { return _refCount; }
+	int32 AddRef() { return ++_refCount; }
 	int32 ReleaseRef() {
 		int32 refCount = --_refCount;
 		if (refCount == 0)
@@ -27,21 +26,21 @@ template<typename T>
 class TSharedPtr
 {
 public:
-	TSharedPtr() {};
-	TSharedPtr(T* ptr) { Set(ptr); };
+	TSharedPtr() {}
+	TSharedPtr(T* ptr) { Set(ptr); }
 
-	// º¹»ç
-	TSharedPtr(const TSharedPtr& rhs) { Set(rhs._ptr); };
-	// ÀÌµ¿
-	TSharedPtr(TSharedPtr&& rhs) { _ptr = rhs._ptr; rhs._ptr = nullptr; };
-	// »ó¼Ó °ü°è º¹»ç
+	// ï¿½ï¿½ï¿½ï¿½
+	TSharedPtr(const TSharedPtr& rhs) { Set(rhs._ptr); }
+	// ï¿½Ìµï¿½
+	TSharedPtr(TSharedPtr&& rhs) { _ptr = rhs._ptr; rhs._ptr = nullptr; }
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	template<typename U>
-	TSharedPtr(const TSharedPtr<U>& rhs) { Set(static_cast<T*>(rhs._ptr)); };
+	TSharedPtr(const TSharedPtr<U>& rhs) { Set(static_cast<T*>(rhs._ptr)); }
 
-	~TSharedPtr() { Release(); };
+	~TSharedPtr() { Release(); }
 
 public:
-	// º¹»ç ¿¬»êÀÚ
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	TSharedPtr& operator=(const TSharedPtr& rhs)
 	{
 		if (_ptr != rhs._ptr)
@@ -50,16 +49,16 @@ public:
 			Set(rhs._ptr);
 		}
 		return*this;
-	};
+	}
 
-	// ÀÌµ¿ ¿¬»êÀÚ
+	// ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	TSharedPtr& operator=(TSharedPtr&& rhs)
 	{
 		Release();
 		_ptr = rhs._ptr;
 		rhs._ptr = nullptr;
 		return *this;
-	};
+	}
 
 	bool operator==(const TSharedPtr& rhs) const { return _ptr == rhs._ptr; };
 	bool operator==(T* ptr) const { return _ptr == ptr; };

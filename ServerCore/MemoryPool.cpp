@@ -28,7 +28,7 @@ MemoryHeader* MemoryPool::Pop()
 {
 	MemoryHeader* memory = static_cast<MemoryHeader*>(::InterlockedPopEntrySList(&_header));
 	
-	// ¾øÀ¸¸é »õ·Î ¸¸µç´Ù
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (memory == nullptr)
 	{
 		memory = reinterpret_cast<MemoryHeader*>(::_aligned_malloc(_allocSize, SLIST_ALIGNMENT));
@@ -37,10 +37,10 @@ MemoryHeader* MemoryPool::Pop()
 	else
 	{
 		ASSERT_CRASH(memory->allocSize == 0);
+		_reserveCount.fetch_sub(1);
 	}
 
 	_useCount.fetch_add(1);
-	_reserveCount.fetch_sub(1);
-
+	
 	return memory;
 }

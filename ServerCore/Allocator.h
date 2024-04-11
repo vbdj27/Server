@@ -32,21 +32,19 @@ class STLAllocator
 public:
 	using value_type = T;
 
-	STLAllocator() {};
+	STLAllocator() {}
 
 	template<typename Other>
-	STLAllocator(const STLAllocator<Other>&) {};
+	STLAllocator(const STLAllocator<Other>&) {}
 
 	T* allocate(size_t count)
 	{
 		const int32 size = static_cast<int32>(count * sizeof(T));
-		return static_cast<T*>(xalloc(size));
+		return static_cast<T*>(PoolAllocator::Alloc(size));
 	};
 
 	void deallocate(T* ptr, size_t count)
 	{
-		xrelease(ptr);
-	};
-
-
+		PoolAllocator::Release(ptr);
+	}
 };

@@ -24,7 +24,7 @@ struct MemoryHeader : public SLIST_ENTRY
 	}
 
 	int32 allocSize;
-	// TODO : ÇÊ¿äÇÑ Ãß°¡ Á¤º¸
+	// TO DO : í•„ìš”í•œ ì¶”ê°€ ì •ë³´
 };
 
 DECLSPEC_ALIGN(SLIST_ALIGNMENT)

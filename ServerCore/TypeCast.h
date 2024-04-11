@@ -99,7 +99,7 @@ private:
 public:
 	enum
 	{
-		exists = sizeof(Test(MakeFrom())) == sizeof(small)
+		exists = sizeof(Test(MakeFrom())) == sizeof(Small)
 	};
 };
 #pragma endregion

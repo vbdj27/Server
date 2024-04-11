@@ -24,7 +24,7 @@ public:
 	{
 		obj->~Type();
 #ifdef _STOMP
-		StompAllocatr::Release(MemoryHeader::DetachHeader(obj));
+		StompAllocator::Release(MemoryHeader::DetachHeader(obj));
 #else
 		s_pool.Push(MemoryHeader::DetachHeader(obj));
 #endif
