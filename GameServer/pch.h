@@ -1,6 +1,6 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN             // °ÅÀÇ »ç¿ëµÇÁö ¾Ê´Â ³»¿ëÀ» Windows Çì´õ¿¡¼­ Á¦¿ÜÇÕ´Ï´Ù.
+#define WIN32_LEAN_AND_MEAN             // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Windows ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 
 #ifdef _DEBUG
 #pragma comment(lib, "Debug\\ServerCore.lib")
