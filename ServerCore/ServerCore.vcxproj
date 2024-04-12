@@ -168,6 +168,7 @@
     <ClInclude Include="Network\IocpEvent.h" />
     <ClInclude Include="Network\Listener.h" />
     <ClInclude Include="Network\NetAddress.h" />
+    <ClInclude Include="Network\Service.h" />
     <ClInclude Include="Network\Session.h" />
     <ClInclude Include="Network\SocketUtils.h" />
     <ClInclude Include="ObjectPool.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="Network\IocpEvent.cpp" />
     <ClCompile Include="Network\Listener.cpp" />
     <ClCompile Include="Network\NetAddress.cpp" />
+    <ClCompile Include="Network\Service.cpp" />
     <ClCompile Include="Network\Session.cpp" />
     <ClCompile Include="Network\SocketUtils.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
