@@ -50,4 +50,7 @@ class SendEvent : public IocpEvent
 {
 public:
     SendEvent() : IocpEvent(EventType::Send) {}
+
+    // Temp
+    vector<BYTE> buffer;
 };
