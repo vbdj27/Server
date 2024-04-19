@@ -36,7 +36,7 @@ bool Listener::StartAccept(ServerServiceRef service)
     if (SocketUtils::SetLinger(_socket, 0, 0) == false)
         return false;
 
-    if (SocketUtils::Bind(_socket, _service->GetNetworkAddress()) == false)
+    if (SocketUtils::Bind(_socket, _service->GetNetAddress()) == false)
         return false;
 
     if (SocketUtils::Listen(_socket) == false)

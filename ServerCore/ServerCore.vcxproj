@@ -169,6 +169,7 @@
     <ClInclude Include="Network\Listener.h" />
     <ClInclude Include="Network\NetAddress.h" />
     <ClInclude Include="Network\RecvBuffer.h" />
+    <ClInclude Include="Network\SendBuffer.h" />
     <ClInclude Include="Network\Service.h" />
     <ClInclude Include="Network\Session.h" />
     <ClInclude Include="Network\SocketUtils.h" />
@@ -336,6 +337,7 @@
     <ClCompile Include="Network\Listener.cpp" />
     <ClCompile Include="Network\NetAddress.cpp" />
     <ClCompile Include="Network\RecvBuffer.cpp" />
+    <ClCompile Include="Network\SendBuffer.cpp" />
     <ClCompile Include="Network\Service.cpp" />
     <ClCompile Include="Network\Session.cpp" />
     <ClCompile Include="Network\SocketUtils.cpp" />

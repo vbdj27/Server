@@ -16,9 +16,9 @@ NetAddress::NetAddress(wstring ip, uint16 port)
 
 wstring NetAddress::GetIpAddress()
 {
-    WCHAR buffer[100];
-    ::InetNtopW(AF_INET, &_sockAddr.sin_addr, buffer, len32(buffer));
-    return wstring(buffer);
+     WCHAR buffer[100];
+	::InetNtopW(AF_INET, &_sockAddr.sin_addr, buffer, len32(buffer));
+	return wstring(buffer);
 }
 
 IN_ADDR NetAddress::Ip2Address(const WCHAR* ip)

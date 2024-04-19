@@ -12,7 +12,7 @@ void Lock::WriteLock(const char* name)
 	// ������ �����尡 �����ϰ� �ִٸ� ������ ����
 	const int32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
 
-	if (LThreadId = lockThreadId)
+	if (LThreadId == lockThreadId)
 	{
 		_writeCount++;
 		return;
@@ -69,9 +69,9 @@ void Lock::ReadLock(const char* name)
 #endif
 
 	// ������ �����尡 �����ϰ� �ִٸ� ������ ����
-	const int32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
+	const uint32 lockThreadId = (_lockFlag.load() & WRITE_THREAD_MASK) >> 16;
 
-	if (LThreadId = lockThreadId)
+	if (LThreadId == lockThreadId)
 	{
 		_lockFlag.fetch_add(1);
 		return;

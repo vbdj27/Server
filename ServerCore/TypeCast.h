@@ -137,7 +137,7 @@ public:
 		else
 			s_convert[i][j] = false;
 
-		MakeTable(Int2Type<i>(0), Int2Type<j + 1>());
+		MakeTable(Int2Type<i>(), Int2Type<j + 1>());
 	}
 
 	template<int32 i>

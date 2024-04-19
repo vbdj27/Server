@@ -1,4 +1,5 @@
 #pragma once
+
 class RefCountable
 {
 public:
@@ -48,7 +49,7 @@ public:
 			Release();
 			Set(rhs._ptr);
 		}
-		return*this;
+		return *this;
 	}
 
 	// �̵� ������
@@ -60,18 +61,18 @@ public:
 		return *this;
 	}
 
-	bool operator==(const TSharedPtr& rhs) const { return _ptr == rhs._ptr; };
-	bool operator==(T* ptr) const { return _ptr == ptr; };
-	bool operator!=(const TSharedPtr& rhs) const { return _ptr != rhs._ptr; };
-	bool operator!=(T* ptr) const { return _ptr != ptr; };
-	bool operator<(const TSharedPtr& rhs) const { return _ptr < rhs._ptr; };
-	T* operator*() { return _ptr; };
-	const T* operator*() const { return _ptr; };
-	operator T* () const { return _ptr; };
-	T* operator->() { return _ptr; };
-	const T* operator->() const { return _ptr; };
+	bool operator==(const TSharedPtr& rhs) const { return _ptr == rhs._ptr; }
+	bool operator==(T* ptr) const { return _ptr == ptr; }
+	bool operator!=(const TSharedPtr& rhs) const { return _ptr != rhs._ptr; }
+	bool operator!=(T* ptr) const { return _ptr != ptr; }
+	bool operator<(const TSharedPtr& rhs) const { return _ptr < rhs._ptr; }
+	T* operator*() { return _ptr; }
+	const T* operator*() const { return _ptr; }
+	operator T* () const { return _ptr; }
+	T* operator->() { return _ptr; }
+	const T* operator->() const { return _ptr; }
 
-	bool IsNull() { return _ptr == nullptr; };
+	bool IsNull() { return _ptr == nullptr; }
 
 private:
 	inline void Set(T* ptr)

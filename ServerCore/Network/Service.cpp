@@ -95,11 +95,6 @@ bool ServerService::Start()
     return true;
 }
 
-ServerService::~ServerService()
-{
-    
-}
-
 void ServerService::CloseService()
 {
     Service::CloseService();

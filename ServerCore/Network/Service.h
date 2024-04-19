@@ -32,12 +32,11 @@ public:
 
 public:
     ServiceType GetServiceType() { return _type; }
-    NetAddress GetNetworkAddress() { return _netAddress; }
+    NetAddress GetNetAddress() { return _netAddress; }
     IocpCoreRef& GetIocpCore() { return _iocpCore; }
     
 protected:
     USE_LOCK;
-
     ServiceType _type;
     NetAddress _netAddress = {};
     IocpCoreRef _iocpCore;
@@ -63,7 +62,7 @@ class ServerService : public Service
 {
 public:
     ServerService(NetAddress targetAddress, IocpCoreRef core, SessionFactory factory, int32 maxSessionCount = 1);
-    virtual ~ServerService();
+    virtual ~ServerService() {};
 
     virtual bool Start() override;
     virtual void CloseService() override;
