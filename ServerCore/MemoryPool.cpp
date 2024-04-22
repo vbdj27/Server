@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "MemoryPool.h"
 
+/*-----------------
+	MemoryPool
+------------------*/
+
 MemoryPool::MemoryPool(int32 allocSize) : _allocSize(allocSize)
 {
 	::InitializeSListHead(&_header);
@@ -9,9 +13,7 @@ MemoryPool::MemoryPool(int32 allocSize) : _allocSize(allocSize)
 MemoryPool::~MemoryPool()
 {
 	while (MemoryHeader* memory = static_cast<MemoryHeader*>(::InterlockedPopEntrySList(&_header)))
-	{
 		::_aligned_free(memory);
-	}
 }
 
 void MemoryPool::Push(MemoryHeader* ptr)
@@ -27,13 +29,12 @@ void MemoryPool::Push(MemoryHeader* ptr)
 MemoryHeader* MemoryPool::Pop()
 {
 	MemoryHeader* memory = static_cast<MemoryHeader*>(::InterlockedPopEntrySList(&_header));
-	
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+
+	// ¾øÀ¸¸é »õ·Î ¸¸µé´Ù
 	if (memory == nullptr)
 	{
 		memory = reinterpret_cast<MemoryHeader*>(::_aligned_malloc(_allocSize, SLIST_ALIGNMENT));
 	}
-
 	else
 	{
 		ASSERT_CRASH(memory->allocSize == 0);
@@ -41,6 +42,6 @@ MemoryHeader* MemoryPool::Pop()
 	}
 
 	_useCount.fetch_add(1);
-	
+
 	return memory;
 }

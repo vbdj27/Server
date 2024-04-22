@@ -2,6 +2,10 @@
 #include "Memory.h"
 #include "MemoryPool.h"
 
+/*-------------
+	Memory
+---------------*/
+
 Memory::Memory()
 {
 	int32 size = 0;
@@ -62,16 +66,15 @@ void* Memory::Allocate(int32 size)
 #else
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
-		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ ï¿½Ö´ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½Ò´ï¿½
+		// ¸Þ¸ð¸® Ç®¸µ ÃÖ´ë Å©±â¸¦ ¹þ¾î³ª¸é ÀÏ¹Ý ÇÒ´ç
 		header = reinterpret_cast<MemoryHeader*>(::_aligned_malloc(allocSize, SLIST_ALIGNMENT));
 	}
-
 	else
 	{
-		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½
+		// ¸Þ¸ð¸® Ç®¿¡¼­ ²¨³»¿Â´Ù
 		header = _poolTable[allocSize]->Pop();
 	}
-#endif
+#endif	
 
 	return MemoryHeader::AttachHeader(header, allocSize);
 }
@@ -88,14 +91,13 @@ void Memory::Release(void* ptr)
 #else
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
-		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ ï¿½Ö´ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// ¸Þ¸ð¸® Ç®¸µ ÃÖ´ë Å©±â¸¦ ¹þ¾î³ª¸é ÀÏ¹Ý ÇØÁ¦
 		::_aligned_free(header);
 	}
-
 	else
 	{
-		// ï¿½Þ¸ï¿½ Ç®ï¿½ï¿½ ï¿½Ý³ï¿½ï¿½Ñ´ï¿½
+		// ¸Þ¸ð¸® Ç®¿¡ ¹Ý³³ÇÑ´Ù
 		_poolTable[allocSize]->Push(header);
 	}
-#endif
+#endif	
 }

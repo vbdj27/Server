@@ -3,13 +3,14 @@
 #include "ThreadManager.h"
 #include "Memory.h"
 #include "DeadLockProfiler.h"
-#include "Network/SocketUtils.h"
+#include "SocketUtils.h"
+#include "SendBuffer.h"
 
-ThreadManager* GThreadManager = nullptr;
-Memory* GMemory = nullptr;
-SendBufferManager*  GSendBufferManager = nullptr;
+ThreadManager*		GThreadManager = nullptr;
+Memory*				GMemory = nullptr;
+SendBufferManager*	GSendBufferManager = nullptr;
 
-DeadLockProfiler* GDeadLockProfiler = nullptr;
+DeadLockProfiler*	GDeadLockProfiler = nullptr;
 
 class CoreGlobal
 {
@@ -31,4 +32,4 @@ public:
 		delete GDeadLockProfiler;
 		SocketUtils::Clear();
 	}
-} GCoreGloal;
+} GCoreGlobal;

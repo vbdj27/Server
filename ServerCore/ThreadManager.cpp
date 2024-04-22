@@ -3,6 +3,10 @@
 #include "CoreTLS.h"
 #include "CoreGlobal.h"
 
+/*------------------
+	ThreadManager
+-------------------*/
+
 ThreadManager::ThreadManager()
 {
 	// Main Thread
@@ -31,11 +35,8 @@ void ThreadManager::Join()
 	for (thread& t : _threads)
 	{
 		if (t.joinable())
-		{
 			t.join();
-		}
 	}
-
 	_threads.clear();
 }
 
