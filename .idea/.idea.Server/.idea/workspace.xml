@@ -8,46 +8,63 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4509f9a-0a42-47f0-b875-e0a816291aa1" name="Changes" comment="" />
+    <list default="true" id="e4509f9a-0a42-47f0-b875-e0a816291aa1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ServerCore/BufferReader.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerCore/BufferReader.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerCore/BufferWriter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ServerCore/BufferWriter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServer/GameServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/GameServer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerCore/SendBuffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ServerCore/SendBuffer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerCore/SendBuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/ServerCore/SendBuffer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerCore/ServerCore.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ServerCore/ServerCore.vcxproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/KMG/Desktop/Repo/ServerCore/Allocator.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ServerCore/Session.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2fReYs0ECa0f4QBHdY8GlRrwiA9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 프로젝트.DummyClient.executor": "Run",
-    "C++ 프로젝트.GameServer.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 프로젝트.DummyClient.executor&quot;: &quot;Run&quot;,
+    &quot;C++ 프로젝트.GameServer.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\KMG\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\KMG\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\KMG\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\KMG\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\KMG\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\KMG\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.DummyClient">
     <configuration name="DummyClient" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -189,15 +206,45 @@
       <updated>1713768368650</updated>
       <workItem from="1713768369950" duration="2499000" />
       <workItem from="1713771296059" duration="859000" />
-      <workItem from="1713772165796" duration="1135000" />
+      <workItem from="1713772165796" duration="2004000" />
+      <workItem from="1713928703280" duration="3308000" />
     </task>
+    <task id="LOCAL-00001" summary="PacketSession">
+      <option name="closed" value="true" />
+      <created>1713773430963</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1713773430963</updated>
+    </task>
+    <task id="LOCAL-00002" summary="PacketSession">
+      <option name="closed" value="true" />
+      <created>1713773553459</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1713773553459</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1713773574421</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713773574421</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="PacketSession" />
+    <MESSAGE value="Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
