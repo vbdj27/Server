@@ -5,6 +5,7 @@
 #include "GameSession.h"
 #include "GameSessionManager.h"
 #include "BufferWriter.h"
+#include "ServerPacketHandler.h"
 
 int main()
 {
@@ -31,21 +32,9 @@ int main()
 
 	while (true)
 	{
-		SendBufferRef sendBuffer = GSendBufferManager->Open(4096);
-
-		BufferWriter bw(sendBuffer->Buffer(), 4096);
-
-		PacketHeader* header = bw.Reserve<PacketHeader>();
-
-		// id, 체력, 공격력
-		bw << (uint64)1001 << (uint32)100 << (uint16)10;
-		bw.Write(sendData, sizeof(sendData));
+		vector<BuffData> buffs { BuffData {100, 1.5f}, BuffData {200, 2.3f}, BuffData {300, 0.7f}};
+		SendBufferRef sendBuffer = ServerPacketHandler::Make_S_TEST(1001, 100, 10, buffs);
 		
-		header->size = bw.WriteSize();
-		header->id = 1;
-		
-		sendBuffer->Close(bw.WriteSize());
-	
 		GSessionManager.Broadcast(sendBuffer);
 
 		this_thread::sleep_for(250ms);
