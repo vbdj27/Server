@@ -9,22 +9,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e4509f9a-0a42-47f0-b875-e0a816291aa1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DummyClient/PDL.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Server/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DummyClient/ClientPacketHandler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DummyClient/ClientPacketHandler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameServer/GameServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/GameServer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameServer/ServerPacketHandler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/ServerPacketHandler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameServer/ServerPacketHandler.h" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/ServerPacketHandler.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DummyClient/DummyClient.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/DummyClient/DummyClient.vcxproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="XML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/KMG/Desktop/Repo/ServerCore/BufferWriter.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/KMG/Desktop/Repo/DummyClient/ClientPacketHandler.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ServerCore/Session.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -207,7 +213,8 @@
       <workItem from="1713772165796" duration="2004000" />
       <workItem from="1713928703280" duration="5468000" />
       <workItem from="1713940475205" duration="1489000" />
-      <workItem from="1714034027768" duration="1090000" />
+      <workItem from="1714034027768" duration="1340000" />
+      <workItem from="1714095153433" duration="2317000" />
     </task>
     <task id="LOCAL-00001" summary="PacketSession">
       <option name="closed" value="true" />
@@ -249,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713941936479</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Unicode">
+      <option name="closed" value="true" />
+      <created>1714035802271</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714035802271</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +277,8 @@
     <MESSAGE value="Commit" />
     <MESSAGE value="BufferHelpers" />
     <MESSAGE value="PacketHandler" />
-    <option name="LAST_COMMIT_MESSAGE" value="PacketHandler" />
+    <MESSAGE value="Unicode" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unicode" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
