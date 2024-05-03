@@ -20,7 +20,7 @@ class PacketIterator
 public:
     PacketIterator(C& container, uint16 index) : _container(container), _index(index) { }
 
-    bool operator=(const PacketIterator& other) const { return _index != other._index; }
+    bool operator!=(const PacketIterator& other) const { return _index != other._index; }
     const T& operator*() const { return _container[_index]; }
     T& operator*() { return _container[_index]; }
     T* operator->() { return &_container[_index]; }

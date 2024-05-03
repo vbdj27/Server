@@ -12,6 +12,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Server/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DummyClient/ClientPacketHandler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DummyClient/ClientPacketHandler.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DummyClient/ClientPacketHandler.h" beforeDir="false" afterPath="$PROJECT_DIR$/DummyClient/ClientPacketHandler.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DummyClient/PDL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DummyClient/PDL.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServer/GameServer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/GameServer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServer/ServerPacketHandler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/ServerPacketHandler.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServer/ServerPacketHandler.h" beforeDir="false" afterPath="$PROJECT_DIR$/GameServer/ServerPacketHandler.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServerCore/BufferWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/ServerCore/BufferWriter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +34,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/KMG/Desktop/Repo/DummyClient/ClientPacketHandler.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/shared/guiddef.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ServerCore/Session.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -214,7 +219,9 @@
       <workItem from="1713940475205" duration="1489000" />
       <workItem from="1714034027768" duration="1340000" />
       <workItem from="1714095153433" duration="2621000" />
-      <workItem from="1714356447986" duration="1365000" />
+      <workItem from="1714356447986" duration="2816000" />
+      <workItem from="1714717720893" duration="3852000" />
+      <workItem from="1714721594544" duration="438000" />
     </task>
     <task id="LOCAL-00001" summary="PacketSession">
       <option name="closed" value="true" />
@@ -272,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714097780868</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="패킷 직렬화2">
+      <option name="closed" value="true" />
+      <created>1714358066472</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714358066472</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +302,19 @@
     <MESSAGE value="PacketHandler" />
     <MESSAGE value="Unicode" />
     <MESSAGE value="Packet직렬화 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Packet직렬화 1" />
+    <MESSAGE value="패킷 직렬화2" />
+    <option name="LAST_COMMIT_MESSAGE" value="패킷 직렬화2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/DummyClient/ClientPacketHandler.cpp</url>
+          <line>105</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

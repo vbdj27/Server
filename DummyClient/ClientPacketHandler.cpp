@@ -27,6 +27,18 @@ struct PKT_S_TEST
 	{
 		uint64 buffId;
 		float remainTime;
+
+		uint16 victimsOffset;
+		uint16 victimsCount;
+
+		bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size)
+		{
+			if (victimsOffset + victimsCount * sizeof(uint64) > packetSize)
+				return false;
+
+			size += victimsCount * sizeof(uint64);
+			return true;
+		}
 	};
 	
 	uint16 packetSize;
@@ -43,27 +55,44 @@ struct PKT_S_TEST
 		size += sizeof(PKT_S_TEST);
 		if (packetSize < size)
 			return false;
-		
-		size += buffsCount * sizeof(BuffsListItem);
 
-		if (size != packetSize)
-			return false;
-
-		if (buffsOffset + buffsCount * sizeof(BuffsListItem) < packetSize)
+		if (buffsOffset + buffsCount * sizeof(BuffsListItem) > packetSize)
 		{
 			return false;
 		}
 
+		// Buffers 가변 데이터 크기 추가
+		size += buffsCount * sizeof(BuffsListItem);
+
+		BuffsList buffList = GetBuffsList();
+		
+		for (int32 i = 0; i < buffList.Count(); i++)
+		{
+			if (buffList[i].Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+		}
+		
+		if (size != packetSize)
+			return false;
+		
 		return true;
 	}
 
 	using BuffsList = PacketList<PKT_S_TEST::BuffsListItem>;
+	using BuffsVictimsList = PacketList<uint64>;
 
 	BuffsList GetBuffsList()
 	{
 		BYTE* data = reinterpret_cast<BYTE*>(this);
 		data += buffsOffset;
 		return BuffsList(reinterpret_cast<PKT_S_TEST::BuffsListItem*>(data), buffsCount);
+	}
+
+	BuffsVictimsList GetBuffsVictimList(BuffsListItem* buffsItem)
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += buffsItem->victimsOffset;
+		return BuffsVictimsList(reinterpret_cast<uint64*>(data), buffsItem->victimsCount);
 	}
 	
 	//vector<BuffData> buffs;
@@ -78,9 +107,6 @@ void ClientPacketHandler::Handle_S_TEST(BYTE* buffer, int32 len)
 	
 	PKT_S_TEST* pkt = reinterpret_cast<PKT_S_TEST*>(buffer);
 	
-	//PKT_S_TEST pkt;
-	//br >> pkt;
-
 	if (pkt->Validate() == false)
 		return;
 	
@@ -89,8 +115,17 @@ void ClientPacketHandler::Handle_S_TEST(BYTE* buffer, int32 len)
 	PKT_S_TEST::BuffsList buffs = pkt->GetBuffsList();
 	
 	cout << "BuffCount : " << buffs.Count() << endl;
-	for (int32 i = 0; i < buffs.Count(); i++)
+	for (auto& buff : buffs)
 	{
-		cout << "BufInfo : " << buffs[i].buffId << " " << buffs[i].remainTime << endl;
+		cout << "BufInfo : " << buff.buffId << " " << buff.remainTime << endl;
+		
+		PKT_S_TEST::BuffsVictimsList victims = pkt->GetBuffsVictimList(&buff);
+
+		cout << "Victim Count : " << victims.Count() << endl;
+
+		for (auto& victim : victims)
+		{
+			cout << "Victim : " << victim << endl;
+		}
 	}
 }
